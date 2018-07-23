@@ -10,13 +10,13 @@ def send(mail_from, mail_to, mail_content, mail_subject, mail_account, mail_pwd)
     msg = MIMEText(mail_content, 'plain', 'utf-8')
     msg['Subject'] = mail_subject
     msg['From'] = Header(mail_from)
-    msg['To'] = Header('receiver', 'utf-8')
     mail_host = 'smtp.exmail.qq.com'
     server = smtplib.SMTP_SSL(mail_host, 465)
     print('开始登陆')
     server.login(mail_account, mail_pwd)
     print('登陆成功')
     for to in mail_to:
+        msg['To'] = Header(to, 'utf-8')
         try:
             server.sendmail(mail_account, to, msg.as_string())
         except Exception as e:
